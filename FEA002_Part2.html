@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Make Bone Model with Meshmixer</title>
+		<title>Make Bone Model with Blender</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -45,97 +45,118 @@
 								<header class="major">
 									<span class="date">January 28, 2022</span>
 									<h1><br />
-										How to make cortical and cancellous bone models - PART 1: Meshmixer</h1>
+										How to make cortical and cancellous bone models - PART 2: Blender</h1>
 									<p>The bone model is assumed to have cortical layer with certain thickness, and cancellous layer beneath it.</p>
 								</header>
-								<div class="image main"><img src="contents/FEA001/FEA001_1.png" alt="" /></div>
+								<div class="image main"><img src="contents/FEA002/FEA002_1.jpg" alt="" /></div>
 								<h2>Introduction</h2>
-								<p>Nowadays, we can simulate the stability test of bone implants without doing the real experiment by using simulation software. If in the real experiment we use cadaveric specimens or synthetic bone as well as implant models, then in the simulated environment we use virtual 3D model of the bone or the implant. In this post, I would like to share you my experience in preparing the bone model which also quite similar with other paper's method.</p>
-								<p>I used Meshmixer to perform this tutorial, which you can download it for free from this <a href="https://meshmixer.com/download.html">link</a></p>
-								<p>In my case, I used tibia bone and planned to make cortical layer (outer layer of bone) with a thickness of 3 mm across tibia surface, mimicking a <a href="https://doi.org/10.1038/s41598-021-81401-6">paper</a> in 2021 published in <a href="https://www.nature.com">Nature</a>.</p>
-								<p><center><img src="contents/FEA001/FEA001_2.png"><center>Tibia bone model</center></center></p>
-								<p>Here I used tibia which I got from 3D scanning the synthetic tibia model. If you are also interested to use tibia or other bone models, there are several websites that give freely downloadable file of 3D bone model, such as this <a href="https://sketchfab.com/3d-models/human-tibia-7c1979d6127749bc80a9d9276d24edcd">link</a>.</p>
-								<p>Previously I already cut the tibia into half using the plane cut feature in Meshmixer as well, leaving the remaining tibia (from tibia plateau to middle part of the tibia).</p>
-								<p>The following method will comprise mainly these parts:</p>
+								<p>This is the second post about my working flow (or I can say my experience) in making the cortical and cancellous bones. The first part of tutorial was about preparing the two layers of bone, using software called Meshmixer. If you are interested in the way I prepared the layers, you can check my previous <a href="FEA001_Part1.html">post</a>.</p>
+								<p>Rather than using Meshmixer again, I chose to use Blender software to finish up my model. You can download it for free from this <a href="https://www.blender.org/download/">link</a>.</p>
+								<p>I put my arguments on fully finishing my work in Meshmixer on the last part of the first part of tutorial, too. Without further a do, here are the steps I did: </p>
+								<h2>Set up the models and functions</h2>
+								<p>Once you open Blender, just create new general model, and delete the cube that usually appears by default whenever you start new model. Then, import the bone model file by clicking FILE → IMPORT → any type of imported file. In my case, I used STL file which was exported from my first part of tutorial.</p>
+								<p><center><img src="contents/FEA002/FEA002_2.jpg"><center>Imported bone model got from the first tutorial</center></center></p>
+								<p>In making the final result, I used principle of Boolean operation, where some parts are used as cutter for other parts to yield new modified part. Blender provides this function, but it may be easier to be used by open EDIT → PREFERENCES. Then, go to ADD-ONS tab, and type “Bool” in the search tab. The search result would look like this:</p>
+								<p><center><img src="contents/FEA002/FEA002_3.jpg"><center>Enabling the Bool Tool</center></center></p>
+								<p>Once you enable it, the layout on the right side of the software would be like this:</p>
+								<p><center><img src="contents/FEA002/FEA002_4.jpg"><center>Bool Tool Enabled</center></center></p>
 								<p>
-								<li>Offsetting</li>
-								<li>Separation of two layers</li>
-								<li>Side story - inspection</li>
+									As I mentioned about Boolean, there must be a part to be the “cutter” for other part. In my case, I used simple plane to be the cutter. I made the plane model while my layout is still in Object Mode, not Edit Mode. I hit ADD → MESH → PLANE. There will be a plane appearing on the center of coordinate.
 								</p>
-								<h3>Offsetting</h3>
-								<p>Choose SELECT and use CTRL+A to select all region, the model color should be changed into different color by now (orange in my model).</p>
-								<p><center><img src="contents/FEA001/FEA001_3.png"><center>Selecting bone surface</center></center></p>
-								<p>Then choose EDIT → OFFSET, Meshmixer will solve it for a while, and after that, Meshmixer will display something like this:</p>
-								<p><center><img src="contents/FEA001/FEA001_4.png"><center>Offset feature parameters</center></center></p>
-								<p>You can adjust the DISTANCE that represents how thick the cortical layer you want to have. By referring to some scientific articles, I set the thickness of my cortical bone model to be 3 mm.</p>
-								<p><b>Be careful</b>, this DISTANCE means the new layer will be created x mm away from the orange layer (went bigger by x mm than the original layer, in the case of picture above). If you want to have the new layer to be x mm smaller than the original one, you can choose either these ways:</p>
-								<h3>1a. Minus-ing</h3>
-								<p>Set the DISTANCE to - x mm. In my case, I set my bone model to be -3 mm, then press ENTER.</p>
-								<p><center><img src="contents/FEA001/FEA001_5.png"><center><img src="contents/FEA001/FEA001_6.png"></center><center>Before (top) and after (bottom) the OFFSET using negative value</center></center></p>
-								<h2>1b. Flip Normal-ing</h2>
-								<p>You can swap the orange and the “zebra” layer by choosing FLIP NORMAL first before choosing OFFSET. After flipping the sides, you can go to OFFSET and you can set the distance using the positive value (i.e. just as simple as 3 mm).</p>
-								<p><center><img src="contents/FEA001/FEA001_7.png"><center><img src="contents/FEA001/FEA001_8.png"></center><center>Making of offset by Flip Normal function</center></center></p>
-								<p>As reminder, the result using FLIP NORMAL will also have flipped side of orange and “zebra” layer, which later you can re-flip it again for other purpose you would like. The result is as shown below.</p>
-								<p><center><img src="contents/FEA001/FEA001_9.png"><center>Bone model after re-flipping it</center></center></p>
-								<h2>Side Story - Failures</h2>
-								<p>If you want to try enclosing the two layers as well, you can follow these steps:</p>
-								<p>Try to separate the two layers. Firstly click EDIT and hit SEPARATE SHELLS</p>
-								<p><center><img src="contents/FEA001/FEA001_10.png"><center>Separate Shells function</center></center></p>
-								<p>The result was shown below:</p>
-								<p><center><img src="contents/FEA001/FEA001_11.png"><center>Two de-fused layers</center></center></p>
-								<p>You can identify which part you are working now by identifying the lighter grey and its corresponding object browser.</p>
-								<p>Then, for each shell, you can select ANALYSIS → INSPECTOR. The blue ball indicate the surface we would like to close (repair) and use “Flat Fill” as its Hole Fill Mode. In here, I set the “Small Thresh” to be 0 mm, to get the flattest result.</p>
-								<p><center><img src="contents/FEA001/FEA001_12.png"></center></p>
-								<p>Once you finish adjusting the small thresh and choosing the “Hole Fill Mode”, hit "Auto Repair All"</p>
-								<p><center><img src="contents/FEA001/FEA001_13.png"><center>Cancellous bone from Inspetor method</center></center></p>
-								<p>The same method can apply to the outer layer:</p>
-								<p><center><img src="contents/FEA001/FEA001_14.png"><center>Cortical bone from Inspector method</center></center></p>
-								<p>As we can see, even though by using the 0 mm small thresh, the interface between the cortical and cancellous cannot be distinguished too clearly. Even the pink part of cortical bone "ate up" some portion of cancellous bone, referring the the surface has not been flatten well.</p>
-								<p>Another way to make the thickened cortical layer is by ticking the “Connected” option during the OFFSET parameter adjustment. The result was like this:</p>
-								<p><center><img src="contents/FEA001/FEA001_15.png"><center>Cortical bone fixed with Connected method</center></center></p>
-								<p>However, still, the result was not fully flat.</p>
-								<p>To find out how I made both cortical and cancellous bones with distinctive interface, you can take a look at my second part on how to make cortical and cancellous bones. I really welcome for any comments and discussions from you, hoping we can get better together in preparing the model for simulation especially bone model 🙂.</p>
+								<p><center><img src="contents/FEA002/FEA002_5.jpg"></center></p>
+								<p>
+									I re-scaled the size of the plane as well as its position to the position where it intersected small part of the bottom part of my bone model (distal part of tibia). Indeed, the end result yield shorter bone model as the compensation of using this Boolean. You can re-scale the plane by hitting S after you click the plane. You can move the plane by the same manner but use G instead of S. In my case, after I hit G, I used Z so that the plane moved along the Z-axis.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_6.jpg"><center>Scaling the plane</center></center></p>
+								<p><center><img src="contents/FEA002/FEA002_7.jpg"><center>Typing G and Z to adjust the plate position</center></center></p>
+								<p><center><img src="contents/FEA002/FEA002_8.jpg"><center>Plane adjusted</center></center></p>
+								<p>
+									I also separated the outer and inner bones by choosing the bone first. Then I hit TAB to change the mode into Edit Mode. With the bone being covered by orange dots (yeah there were so many dots or so-called nodes) I used left click → SEPARATE → BY LOOSE PARTS.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_9.jpg"><center>Separating the bone layers</center></center></p>
+								<p>
+									It ended up giving me two separated bones.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_10.jpg"></center></p>
+								<p>
+									As the Boolean operation would delete the original file, I suggested to have copies of each model and keeping them in new collection as “Backup files”.
+								</p>
+								<p>
+									Now that the file has been imported and the tools needed has been enabled, what remained was the Boolean operation
+								</p>
+								<h2>Boolean Operation</h2>
+								<p>
+									The principle in using the BOOL TOOL is to click one part, hold SHIFT while clicking other part, and perform one of the AUTO BOOLEAN. In my case, firstly I only made the models I want to involve in as the visible ones, leaving other models being hidden. I clicked the plane first, then held SHIFT while choosing the outer bone model. You can now see that the first one being chosen had darker color.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_11.jpg"><center>Boolean operaton for outer bone</center></center></p>
+								<p>
+									I opened EDIT tab at the right side of layout, expanded BOOL TOOL, and chose SLICE. The result was shown below:
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_12.jpg"><center>Result of Boolean operation</center></center></p>
+								<p>
+									It was not finished yet. The orange surface cultivated from the Boolean operation then was deleted, giving final result like this:
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_13.jpg"><center>Obtained outer bone model</center></center></p>
+								<p>
+									I would like to remind you that the plane was deleted after this process. That is where backing up other plane took its role. Same procedures were also applied to the inner bone model.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_14.jpg"><center>Boolean operation for inner bone</center></center></p>
+								<p><center><img src="contents/FEA002/FEA002_15.jpg"><center>Result of Boolean operation on inner bone model</center></center></p>
+								<p><center><img src="contents/FEA002/FEA002_16.jpg"><center>Finished Boolean operation of inner bone model</center></center></p>
+								<p>
+									As we can see, there were some flakes of grey shade on the inner bone model because both first and second results surface collided each other. It brought me to the last step, where I firstly chose inner bone, held SHIFT while choosing the outer one, and hit the SLICE on Auto Boolean.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_17.jpg"><center>Last Boolean operation</center></center></p>
+								<p>
+									The final result was eventually obtained.
+								</p>
+								<p><center><img src="contents/FEA002/FEA002_1.jpg"><center>Final result</center></center></p>
+								<p>
+									Hopefully these tutorials bring more insights to you in preparing models similar with mine. I intendedly used both free software in as I thought both software are powerful yet freely accessible for those who has not been able to afford pricier similar software. It would be advantageous instead if we can utilize the free software as optimum as we can 🙂. Thank you and see you in the other upcoming posts!
+								</p>
 							</section>
 					</div>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
+				<footer id="footer">
+					<section>
+						<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeI_rrKfaAUX-0zEcMmxXjl0TnvbgZBBk_V1sGmVFhfVuva_A/viewform?embedded=true" width="1000" height="721" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+						<!-- <form method="post" action="#">
+							<div class="fields">
+								<div class="field">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" />
 								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
+								<div class="field">
+									<label for="email">Email</label>
+									<input type="text" name="email" id="email" />
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="3"></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form> 
+					</section>
+					
+					<section class="split contact">
+						<section>
+							<h3>Email</h3>
+							<p><a href="#">grynzy1@gmail.com</a></p>
 						</section>
-						<section class="split contact">
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">grynzy1@gmail.com</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="https://twitter.com/PeterTimotius" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="https://www.instagram.com/terterpeter" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="https://github.com/grynzy" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://twitter.com/PeterTimotius" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="https://www.instagram.com/terterpeter" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/grynzy" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section> -->
+					</section>
+				</footer>
 
 				<!-- Copyright -->
 					<div id="copyright">

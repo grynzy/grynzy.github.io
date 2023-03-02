@@ -3276,7 +3276,7 @@ input, select, textarea {
 		@media screen and (orientation: portrait) {
 
 			#wrapper > .bg {
-				background-size: contain;								cover,														cover 175%;
+				background-size: cover;
 			}
 
 		}
@@ -4184,7 +4184,7 @@ input, select, textarea {
 		#footer .pagination span {
 			color: #e2e2e2;
 		}
-
+		
 		#footer > section {
 			-moz-flex-basis: 50%;
 			-webkit-flex-basis: 50%;
@@ -4205,7 +4205,7 @@ input, select, textarea {
 			#footer > section:first-child {
 				border-left: 0;
 			}
-
+			
 			#footer > section.split {
 				display: -moz-flex;
 				display: -webkit-flex;
